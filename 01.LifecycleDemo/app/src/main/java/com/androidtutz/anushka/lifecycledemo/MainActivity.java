@@ -1,7 +1,10 @@
 package com.androidtutz.anushka.lifecycledemo;
 
+import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -15,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
     MainActivityViewModel mainActivityViewModel;
 
     private TextView textView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,14 +28,21 @@ public class MainActivity extends AppCompatActivity {
 
         mainActivityViewModel = ViewModelProviders.of(this).get(MainActivityViewModel.class);
 
-        textView=findViewById(R.id.tvCount);
-        textView.setText("Count is: "+mainActivityViewModel.getInitialCount());
+        textView = findViewById(R.id.tvCount);
+
+        LiveData<Integer> count = mainActivityViewModel.getInitialCount();
+        count.observe(this, new Observer<Integer>() {
+            @Override
+            public void onChanged(@Nullable Integer count) {
+                textView.setText("Count is: " + count);
+            }
+        });
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                textView.setText("Count is: "+mainActivityViewModel.getCurrentCount());
+                mainActivityViewModel.getCurrentCount();
             }
         });
     }
