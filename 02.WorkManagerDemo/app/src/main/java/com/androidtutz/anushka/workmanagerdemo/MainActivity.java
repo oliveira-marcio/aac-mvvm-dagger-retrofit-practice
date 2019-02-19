@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.work.Constraints;
 import androidx.work.Data;
 import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkInfo;
@@ -31,8 +32,13 @@ public class MainActivity extends AppCompatActivity {
                 .putInt(KEY_COUNT_VALUE, 1750)
                 .build();
 
+        Constraints constraints = new Constraints.Builder()
+                .setRequiresCharging(true)
+                .build();
+
         final OneTimeWorkRequest oneTimeWorkRequest = new OneTimeWorkRequest.Builder(DemoWorker.class)
                 .setInputData(data)
+                .setConstraints(constraints)
                 .build();
 
         final TextView textView = findViewById(R.id.tvStatus);
