@@ -1,14 +1,18 @@
 package com.androidtutz.anushka.workmanagerdemo;
 
+import android.arch.lifecycle.Observer;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import androidx.work.OneTimeWorkRequest;
+import androidx.work.WorkInfo;
 import androidx.work.WorkManager;
 
 public class MainActivity extends AppCompatActivity {
@@ -23,6 +27,8 @@ public class MainActivity extends AppCompatActivity {
         final OneTimeWorkRequest oneTimeWorkRequest = new OneTimeWorkRequest.Builder(DemoWorker.class)
                 .build();
 
+        final TextView textView = findViewById(R.id.tvStatus);
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -30,6 +36,16 @@ public class MainActivity extends AppCompatActivity {
                 WorkManager.getInstance().enqueue(oneTimeWorkRequest);
             }
         });
+
+        WorkManager.getInstance().getWorkInfoByIdLiveData(oneTimeWorkRequest.getId())
+                .observe(this, new Observer<WorkInfo>() {
+                    @Override
+                    public void onChanged(@Nullable WorkInfo workInfo) {
+                        if(workInfo != null) {
+                            textView.setText(workInfo.getState().name());
+                        }
+                    }
+                });
     }
 
     @Override
