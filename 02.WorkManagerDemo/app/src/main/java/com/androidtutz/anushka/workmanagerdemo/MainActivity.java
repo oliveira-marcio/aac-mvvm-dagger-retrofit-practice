@@ -10,12 +10,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.work.Data;
 import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkInfo;
 import androidx.work.WorkManager;
 
 public class MainActivity extends AppCompatActivity {
+    public static final String KEY_COUNT_VALUE = "key_count";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,7 +27,12 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        Data data = new Data.Builder()
+                .putInt(KEY_COUNT_VALUE, 1750)
+                .build();
+
         final OneTimeWorkRequest oneTimeWorkRequest = new OneTimeWorkRequest.Builder(DemoWorker.class)
+                .setInputData(data)
                 .build();
 
         final TextView textView = findViewById(R.id.tvStatus);
@@ -43,6 +51,12 @@ public class MainActivity extends AppCompatActivity {
                     public void onChanged(@Nullable WorkInfo workInfo) {
                         if(workInfo != null) {
                             textView.setText(workInfo.getState().name());
+
+                            if(workInfo.getState().isFinished()){
+                                Data data1 = workInfo.getOutputData();
+                                String message = data1.getString(DemoWorker.KEY_WORKER);
+                                Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
+                            }
                         }
                     }
                 });
