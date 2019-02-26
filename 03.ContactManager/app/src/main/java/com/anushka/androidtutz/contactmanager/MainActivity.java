@@ -1,9 +1,12 @@
 package com.anushka.androidtutz.contactmanager;
 
+import android.arch.persistence.db.SupportSQLiteDatabase;
 import android.arch.persistence.room.Room;
+import android.arch.persistence.room.RoomDatabase;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +15,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -42,8 +46,10 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setTitle(" Contacts Manager");
 
         recyclerView = findViewById(R.id.recycler_view_contacts);
-        contactAppDatabase = Room.databaseBuilder(getApplicationContext(), ContactAppDatabase.class, "contactDB").build();
-
+        contactAppDatabase = Room
+                .databaseBuilder(getApplicationContext(), ContactAppDatabase.class, "contactDB")
+                .addCallback(callback)
+                .build();
 
         contactsAdapter = new ContactsAdapter(this, contactArrayList, MainActivity.this);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
@@ -242,4 +248,23 @@ public class MainActivity extends AppCompatActivity {
             contactsAdapter.notifyDataSetChanged();
         }
     }
+
+    RoomDatabase.Callback callback = new RoomDatabase.Callback() {
+        @Override
+        public void onCreate(@NonNull SupportSQLiteDatabase db) {
+            super.onCreate(db);
+            Log.i("MainActivity", "callback on create invoked");
+
+            createContact("name 1", "email 1");
+            createContact("name 2", "email 2");
+            createContact("name 3", "email 3");
+            createContact("name 4", "email 4");
+        }
+
+        @Override
+        public void onOpen(@NonNull SupportSQLiteDatabase db) {
+            super.onOpen(db);
+            Log.i("MainActivity", "callback on open invoked");
+        }
+    };
 }
