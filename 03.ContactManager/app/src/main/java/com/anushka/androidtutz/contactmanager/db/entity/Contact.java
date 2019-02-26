@@ -59,12 +59,4 @@ public class Contact {
         this.id = id;
     }
 
-
-    // Create table SQL query
-//    public static final String CREATE_TABLE =
-//            "CREATE TABLE " + TABLE_NAME + "("
-//                    + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-//                    + COLUMN_NAME + " TEXT,"
-//                    + COLUMN_EMAIL + " DATETIME DEFAULT CURRENT_TIMESTAMP"
-//                    + ")";
 }
