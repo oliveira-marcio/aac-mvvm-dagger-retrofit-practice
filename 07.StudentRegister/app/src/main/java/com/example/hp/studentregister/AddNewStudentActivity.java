@@ -1,56 +1,53 @@
 package com.example.hp.studentregister;
 
+import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.text.TextUtils;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
+
+import com.example.hp.studentregister.databinding.ActivityAddNewStudentBinding;
 
 public class AddNewStudentActivity extends AppCompatActivity {
 
-    private Button submitButton;
-    private EditText nameEditText;
-    private EditText emailEditText;
-    private EditText countryEditText;
+    private ActivityAddNewStudentBinding activityAddNewStudentBinding;
+    private AddNewActivityClickHandlers handlers;
+    Student student;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_new_student);
 
-        nameEditText=findViewById(R.id.et_name);
-        emailEditText=findViewById(R.id.et_email);
-        countryEditText=findViewById(R.id.et_country);
-        submitButton=findViewById(R.id.btnSubmit);
+        activityAddNewStudentBinding = DataBindingUtil.setContentView(this, R.layout.activity_add_new_student);
 
-        submitButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        student = new Student();
+        activityAddNewStudentBinding.setStudent(student);
 
-                if(TextUtils.isEmpty(nameEditText.getText())){
+        handlers = new AddNewActivityClickHandlers(this);
+        activityAddNewStudentBinding.setClickHandler(handlers);
+    }
 
-                    Toast.makeText(getApplicationContext(),"Name field cannot be empty",Toast.LENGTH_LONG).show();
-                }else{
+    public class AddNewActivityClickHandlers {
+        Context context;
 
-                    String name=nameEditText.getText().toString();
-                    String email=emailEditText.getText().toString();
-                    String country=countryEditText.getText().toString();
+        public AddNewActivityClickHandlers(Context context) {
+            this.context = context;
+        }
 
-                    Intent intent=new Intent();
-                    intent.putExtra("NAME",name);
-                    intent.putExtra("EMAIL",email);
-                    intent.putExtra("COUNTRY",country);
-                    setResult(RESULT_OK,intent);
-                    finish();
-
-                }
-
+        public void onSubmitClicked(View view) {
+            if (student.getName() == null) {
+                Toast.makeText(getApplicationContext(), "Name field cannot be empty", Toast.LENGTH_LONG).show();
+            } else {
+                Intent intent = new Intent();
+                intent.putExtra("NAME", student.getName());
+                intent.putExtra("EMAIL", student.getEmail());
+                intent.putExtra("COUNTRY", student.getCountry());
+                setResult(RESULT_OK, intent);
+                finish();
             }
-        });
-
-
+        }
     }
 }
