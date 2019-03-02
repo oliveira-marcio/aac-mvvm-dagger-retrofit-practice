@@ -1,5 +1,6 @@
 package com.anushka.androidtutz.bindingdemo2;
 
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -9,7 +10,10 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.anushka.androidtutz.bindingdemo2.databinding.ActivityMainBinding;
+
 public class MainActivity extends AppCompatActivity {
+    private ActivityMainBinding activityMainBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +30,11 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+        activityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        activityMainBinding.setStudent(getCurrentStudent());
+
+
     }
 
     @Override
@@ -48,5 +57,14 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private Student getCurrentStudent(){
+
+        Student student = new Student();
+        student.setStudentName("Alex");
+        student.setStudentEmail("alex@gmail.com");
+        return student;
+
     }
 }
