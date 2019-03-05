@@ -2,6 +2,7 @@ package com.marcio.ebookshop.model;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
@@ -20,6 +21,7 @@ public class Category extends BaseObservable {
     @ColumnInfo(name = "category_description")
     private String categoryDescription;
 
+    @Ignore
     public Category() {
     }
 
@@ -57,5 +59,10 @@ public class Category extends BaseObservable {
     public void setCategoryDescription(String categoryDescription) {
         this.categoryDescription = categoryDescription;
         notifyPropertyChanged(BR.categoryDescription);
+    }
+
+    @Override
+    public String toString() {
+        return this.categoryName;
     }
 }

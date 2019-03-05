@@ -3,6 +3,7 @@ package com.marcio.ebookshop.model;
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
+import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
@@ -25,9 +26,10 @@ public class Book extends BaseObservable {
     @ColumnInfo(name = "unit_price")
     private String unitPrice;
 
-    @ColumnInfo(name = "category_id")
+    @ColumnInfo(name = "category_id", index = true)
     private int categoryId;
 
+    @Ignore
     public Book() {
     }
 
