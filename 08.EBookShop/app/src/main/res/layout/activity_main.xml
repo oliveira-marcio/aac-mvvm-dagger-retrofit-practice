@@ -32,6 +32,13 @@
                 android:textSize="20sp"
                 app:adapter="@{spinnerAdapter}" />
 
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rvBooks"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="8dp"
+                android:background="@color/colorPrimary" />
+
         </LinearLayout>
 
         <android.support.design.widget.FloatingActionButton
