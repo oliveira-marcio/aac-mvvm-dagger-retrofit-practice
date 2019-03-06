@@ -10,6 +10,8 @@ import android.databinding.Bindable;
 
 import com.marcio.ebookshop.BR;
 
+import java.util.Objects;
+
 import static android.arch.persistence.room.ForeignKey.CASCADE;
 
 @Entity(tableName = "books", foreignKeys = @ForeignKey(entity = Category.class,
@@ -78,5 +80,21 @@ public class Book extends BaseObservable {
     public void setCategoryId(int categoryId) {
         this.categoryId = categoryId;
         notifyPropertyChanged(BR.categoryId);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Book)) return false;
+        Book book = (Book) o;
+        return getBookId() == book.getBookId() &&
+                getCategoryId() == book.getCategoryId() &&
+                Objects.equals(getBookName(), book.getBookName()) &&
+                Objects.equals(getUnitPrice(), book.getUnitPrice());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getBookId(), getBookName(), getUnitPrice(), getCategoryId());
     }
 }

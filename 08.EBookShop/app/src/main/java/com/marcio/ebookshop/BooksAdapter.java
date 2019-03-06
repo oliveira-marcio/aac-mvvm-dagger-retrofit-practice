@@ -2,6 +2,7 @@ package com.marcio.ebookshop;
 
 import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
+import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,9 +42,10 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.BookViewHold
         return books != null ? books.size() : 0;
     }
 
-    public void setBooks(List<Book> books) {
-        this.books = books;
-        notifyDataSetChanged();
+    public void setBooks(List<Book> newBooks) {
+        final DiffUtil.DiffResult result = DiffUtil.calculateDiff(new BookDiffCallback(books, newBooks), false);
+        books = newBooks;
+        result.dispatchUpdatesTo(BooksAdapter.this);
     }
 
     class BookViewHolder extends RecyclerView.ViewHolder {
