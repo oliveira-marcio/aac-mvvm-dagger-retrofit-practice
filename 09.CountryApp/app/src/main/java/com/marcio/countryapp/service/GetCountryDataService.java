@@ -8,5 +8,5 @@ import retrofit2.http.GET;
 public interface GetCountryDataService {
 
     @GET("country/get/all")
-    Call<Info> getResultes();
+    Call<Info> getResults();
 }
