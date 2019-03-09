@@ -2,9 +2,11 @@ package com.marcio.countryapp.view;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 
 import com.marcio.countryapp.R;
+import com.marcio.countryapp.adapter.CountryAdapter;
 import com.marcio.countryapp.model.Info;
 import com.marcio.countryapp.model.Result;
 import com.marcio.countryapp.service.GetCountryDataService;
@@ -19,6 +21,8 @@ import retrofit2.Response;
 public class MainActivity extends AppCompatActivity {
 
     private List<Result> results;
+    private CountryAdapter countryAdapter;
+    private RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,9 +41,7 @@ public class MainActivity extends AppCompatActivity {
                 Info info = response.body();
                 if (info != null && info.getRestResponse() != null) {
                     results = info.getRestResponse().getResult();
-                    for (Result result : results) {
-                        Log.i("testing", "****************" + result.getName());
-                    }
+                    viewData();
                 }
             }
 
@@ -50,5 +52,13 @@ public class MainActivity extends AppCompatActivity {
         });
 
         return results;
+    }
+
+    private void viewData(){
+        recyclerView = findViewById(R.id.rv_countries_list);
+        countryAdapter = new CountryAdapter(results);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(MainActivity.this);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(countryAdapter);
     }
 }
