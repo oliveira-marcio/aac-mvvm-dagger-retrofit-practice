@@ -1,9 +1,12 @@
 package com.androidtutz.anushka.tmdbclient.view;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.res.Configuration;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,15 +14,10 @@ import android.support.v7.widget.RecyclerView;
 import com.androidtutz.anushka.tmdbclient.R;
 import com.androidtutz.anushka.tmdbclient.adapter.MovieAdapter;
 import com.androidtutz.anushka.tmdbclient.model.Movie;
-import com.androidtutz.anushka.tmdbclient.model.MovieDBResponse;
-import com.androidtutz.anushka.tmdbclient.service.MovieDataService;
-import com.androidtutz.anushka.tmdbclient.service.RetrofitInstance;
+import com.androidtutz.anushka.tmdbclient.viewmodel.MainActivityViewModel;
 
 import java.util.ArrayList;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -27,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private MovieAdapter movieAdapter;
     private SwipeRefreshLayout swipeRefreshLayout;
+    private MainActivityViewModel mainActivityViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +33,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         getSupportActionBar().setTitle("TMDB Popular Movies Today");
+
+        mainActivityViewModel = ViewModelProviders.of(this).get(MainActivityViewModel.class);
 
         getPopularMovies();
 
@@ -52,35 +53,13 @@ public class MainActivity extends AppCompatActivity {
 
     public void getPopularMovies() {
 
-        MovieDataService movieDataService = RetrofitInstance.getService();
-
-        Call<MovieDBResponse> call = movieDataService.getPopularMovies(this.getString(R.string.api_key));
-
-        call.enqueue(new Callback<MovieDBResponse>() {
+        mainActivityViewModel.getAllMovies().observe(this, new Observer<List<Movie>>() {
             @Override
-            public void onResponse(Call<MovieDBResponse> call, Response<MovieDBResponse> response) {
-
-                MovieDBResponse movieDBResponse = response.body();
-
-
-                if (movieDBResponse != null && movieDBResponse.getMovies() != null) {
-
-
-                    movies = (ArrayList<Movie>) movieDBResponse.getMovies();
-                    showOnRecyclerView();
-
-
-                }
-
-
-            }
-
-            @Override
-            public void onFailure(Call<MovieDBResponse> call, Throwable t) {
-
+            public void onChanged(@Nullable List<Movie> moviesFromLiveData) {
+                movies = (ArrayList<Movie>) moviesFromLiveData;
+                showOnRecyclerView();
             }
         });
-
     }
 
     private void showOnRecyclerView() {
