@@ -1,5 +1,6 @@
 package com.androidtutz.anushka.tmdbclient.adapter;
 
+import android.arch.paging.PagedListAdapter;
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
@@ -24,14 +25,13 @@ import java.util.ArrayList;
 /**
  * Created by K. A. ANUSHKA MADUSANKA on 7/10/2018.
  */
-public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder>{
+public class MovieAdapter extends PagedListAdapter<Movie,MovieAdapter.MovieViewHolder> {
 
     private Context context;
-    private ArrayList<Movie> movieArrayList;
 
-    public MovieAdapter(Context context, ArrayList<Movie> movieArrayList) {
+    public MovieAdapter(Context context) {
+        super(Movie.CALLBACK);
         this.context = context;
-        this.movieArrayList = movieArrayList;
     }
 
     @NonNull
@@ -46,19 +46,13 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     @Override
     public void onBindViewHolder(@NonNull MovieViewHolder holder, int position) {
 
-        Movie movie=movieArrayList.get(position);
+        Movie movie=getItem(position);
         String imagePath="https://image.tmdb.org/t/p/w500"+movie.getPosterPath();
         movie.setPosterPath(imagePath);
 
         holder.movieListItemBinding.setMovie(movie);
 
     }
-
-    @Override
-    public int getItemCount() {
-        return movieArrayList.size();
-    }
-
 
     public class MovieViewHolder extends RecyclerView.ViewHolder {
      private MovieListItemBinding movieListItemBinding;
@@ -76,7 +70,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
 
                     if(position!=RecyclerView.NO_POSITION) {
 
-                        Movie selctedMovie = movieArrayList.get(position);
+                        Movie selctedMovie = getItem(position);
 
                         Intent intent=new Intent(context, MovieActivity.class);
                         intent.putExtra("movie",selctedMovie);
