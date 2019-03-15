@@ -12,12 +12,16 @@ import java.util.List;
 
 public class MainActivityViewModel extends AndroidViewModel {
     private MovieRepository movieRepository;
+
     public MainActivityViewModel(@NonNull Application application) {
         super(application);
-        movieRepository = new MovieRepository(application);
+        movieRepository=new MovieRepository(application);
     }
 
     public LiveData<List<Movie>> getAllMovies(){
+
         return movieRepository.getMutableLiveData();
     }
+
+
 }
