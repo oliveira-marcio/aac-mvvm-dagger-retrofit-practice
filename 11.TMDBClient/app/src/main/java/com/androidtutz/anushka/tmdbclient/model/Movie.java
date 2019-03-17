@@ -4,15 +4,11 @@ package com.androidtutz.anushka.tmdbclient.model;
  * Created by K. A. ANUSHKA MADUSANKA on 7/9/2018.
  */
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 import android.databinding.BindingAdapter;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.os.Parcelable.Creator;
 import android.support.v7.util.DiffUtil;
 import android.widget.ImageView;
 
@@ -21,6 +17,9 @@ import com.androidtutz.anushka.tmdbclient.R;
 import com.bumptech.glide.Glide;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Movie extends BaseObservable implements Parcelable
 {
@@ -48,9 +47,9 @@ public class Movie extends BaseObservable implements Parcelable
     private String posterPath;
     @BindingAdapter({"posterPath"})
     public static void loadImage(ImageView imageView,String imageURL){
-
+        String imagePath = "https://image.tmdb.org/t/p/w500" + imageURL;
         Glide.with(imageView.getContext())
-                .load(imageURL)
+                .load(imagePath)
                 .placeholder(R.drawable.loading)
                 .into(imageView);
     }
