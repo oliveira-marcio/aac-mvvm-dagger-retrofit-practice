@@ -2,9 +2,9 @@ package com.androidtutz.anushka.didemo;
 
 import javax.inject.Inject;
 
-public class Battery {
+// Simulate the work with interface
+public interface Battery {
 
-    @Inject
-    public Battery() {
-    }
+    void showType();
+
 }

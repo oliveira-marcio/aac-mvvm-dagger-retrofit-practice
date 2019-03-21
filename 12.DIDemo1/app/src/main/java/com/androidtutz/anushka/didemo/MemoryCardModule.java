@@ -7,7 +7,7 @@ import dagger.Provides;
 public class MemoryCardModule {
 
     @Provides
-    MemoryCard provideMemoryCard(){
+    static MemoryCard provideMemoryCard(){
 
         return new MemoryCard();
     }
