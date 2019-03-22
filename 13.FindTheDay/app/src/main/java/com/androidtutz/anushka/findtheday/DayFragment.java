@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.TextView;
 
+import javax.inject.Inject;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -21,6 +23,9 @@ import android.widget.TextView;
  * create an instance of this fragment.
  */
 public class DayFragment extends DialogFragment {
+
+    @Inject
+    DayChooser dayChooser;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -67,7 +72,9 @@ public class DayFragment extends DialogFragment {
         View view = inflater.inflate(R.layout.fragment_day, container, false);
         textView = (TextView) view.findViewById(R.id.tvValue);
 
-        DayChooser dayChooser = new DayChooser();
+        MyApp.getMyApp().getApplicationComponent().inject(this);
+
+//        DayChooser dayChooser = new DayChooser();
         String day = dayChooser.getTheDay(enteredNumber);
 
         textView.setText(day);
