@@ -1,5 +1,7 @@
 package com.androidtutz.anushka.memberapp;
 
+import android.content.SharedPreferences;
+
 import java.util.ArrayList;
 
 /**
@@ -10,8 +12,13 @@ public class MemberDataManager {
 
     private String memberStatus;
     private ArrayList<Member> members = new ArrayList<>();
+    private SharedPreferences sharedPreferences;
+    private static final String COUNT_KEY = "count";
+    private int currentCount;
 
-    public MemberDataManager() {
+    public MemberDataManager(SharedPreferences pref) {
+
+        sharedPreferences = pref;
 
         populateData();
     }
@@ -26,7 +33,8 @@ public class MemberDataManager {
 
             if ((m.getMemberId().equals(userInput))) {
 
-                memberStatus = "Access Granted";
+                updateAccessCount();
+                memberStatus = "Access Granted : Access count is " + getCurrentCount();
 
             }
 
@@ -35,6 +43,18 @@ public class MemberDataManager {
 
 
         return memberStatus;
+    }
+
+    public int getCurrentCount() {
+        currentCount = sharedPreferences.getInt(COUNT_KEY, 0);
+        return currentCount;
+    }
+
+    private void updateAccessCount() {
+        sharedPreferences.edit()
+                .putInt(COUNT_KEY, getCurrentCount() + 1)
+                .apply();
+
     }
 
 

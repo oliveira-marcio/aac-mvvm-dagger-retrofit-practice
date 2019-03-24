@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import javax.inject.Inject;
@@ -21,6 +22,8 @@ public class MainActivity extends AppCompatActivity {
     EditText memberId;
     @BindView(R.id.btnSubmit)
     Button submitButton;
+    @BindView(R.id.tvResult)
+    TextView tvResult;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @OnClick(R.id.btnSubmit)
-    public void onClick(){
+    public void onClick() {
         if ((memberId.getText().toString().equals(""))) {
             Toast.makeText(getApplicationContext(), "Member ID is empty", Toast.LENGTH_SHORT).show();
         } else {
@@ -43,8 +46,8 @@ public class MainActivity extends AppCompatActivity {
             // String result=new MemberDataManager().checkMemberStatus(input);
             String result = memberDataManager.checkMemberStatus(input);
 
-
-            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
+            tvResult.setText(result);
+//            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
         }
     }
 }

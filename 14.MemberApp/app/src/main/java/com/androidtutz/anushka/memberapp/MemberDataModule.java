@@ -1,5 +1,9 @@
 package com.androidtutz.anushka.memberapp;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+
 import javax.inject.Singleton;
 
 import dagger.Module;
@@ -11,12 +15,29 @@ import dagger.Provides;
 @Module
 public class MemberDataModule {
 
+    private Context context;
+
+    public MemberDataModule(Context context) {
+        this.context = context;
+    }
 
     @Provides
     @Singleton
-    MemberDataManager provideMemberDataManager() {
+    public Context provideContext(){
+        return context;
+    }
 
-        return new MemberDataManager();
+    @Provides
+    @Singleton
+    public SharedPreferences provideSharedPreferences(Context context){
+        return PreferenceManager.getDefaultSharedPreferences(context);
+    }
+
+    @Provides
+    @Singleton
+    MemberDataManager provideMemberDataManager(SharedPreferences sharedPreferences) {
+
+        return new MemberDataManager(sharedPreferences);
 
 
     }
