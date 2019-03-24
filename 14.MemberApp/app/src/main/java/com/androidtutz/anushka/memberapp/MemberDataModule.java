@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import javax.inject.Named;
 import javax.inject.Singleton;
 
 import dagger.Module;
@@ -35,9 +36,26 @@ public class MemberDataModule {
 
     @Provides
     @Singleton
-    MemberDataManager provideMemberDataManager(SharedPreferences sharedPreferences) {
+    public NetworkManager provideNetworkManager(){
+        return new NetworkManager();
+    }
+
+    @Provides
+    @Named("local")
+    @Singleton
+    MemberDataManager provideMemberDataManagerLocal(SharedPreferences sharedPreferences) {
 
         return new MemberDataManager(sharedPreferences);
+
+
+    }
+
+    @Provides
+    @Named("online")
+    @Singleton
+    MemberDataManager provideMemberDataManagerOnline(SharedPreferences sharedPreferences, NetworkManager networkManager) {
+
+        return new MemberDataManager(sharedPreferences, networkManager);
 
 
     }

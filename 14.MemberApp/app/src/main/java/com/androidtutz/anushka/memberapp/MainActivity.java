@@ -8,6 +8,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -15,6 +16,7 @@ import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity {
     @Inject
+    @Named("local")
     MemberDataManager memberDataManager;
 
 

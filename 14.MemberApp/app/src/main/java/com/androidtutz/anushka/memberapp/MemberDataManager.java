@@ -23,6 +23,12 @@ public class MemberDataManager {
         populateData();
     }
 
+    public MemberDataManager(SharedPreferences pref, NetworkManager networkManager) {
+
+        sharedPreferences = pref;
+
+        populateData();
+    }
 
     public String checkMemberStatus(String userInput) {
 
