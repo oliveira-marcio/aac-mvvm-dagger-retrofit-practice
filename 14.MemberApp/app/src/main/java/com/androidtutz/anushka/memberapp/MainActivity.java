@@ -19,6 +19,9 @@ public class MainActivity extends AppCompatActivity {
     @Named("local")
     MemberDataManager memberDataManager;
 
+    @Inject
+    @Named("dd-MMM-yy")
+    String currentDate;
 
     @BindView(R.id.etMemberId)
     EditText memberId;
@@ -34,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         App.getApp().getMemberAppComponent().inject(this);
+        tvResult.setText(currentDate);
     }
 
     @OnClick(R.id.btnSubmit)

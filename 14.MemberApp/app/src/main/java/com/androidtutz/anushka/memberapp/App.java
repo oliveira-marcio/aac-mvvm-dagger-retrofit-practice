@@ -27,6 +27,7 @@ public class App extends Application {
         app = this;
         memberAppComponent = DaggerMemberAppComponent.builder()
                 .memberDataModule(new MemberDataModule(getApplicationContext()))
+                .dateAndTimeModule(new DateAndTimeModule())
                 .build();
 
 
