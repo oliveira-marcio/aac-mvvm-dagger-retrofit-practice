@@ -1,6 +1,7 @@
-package com.androidtutz.anushka.memberapp.Modules;
+package com.androidtutz.anushka.memberapp.modules;
 
-import com.androidtutz.anushka.memberapp.Models.MessageGenerator;
+import com.androidtutz.anushka.memberapp.models.MessageGenerator;
+import com.androidtutz.anushka.memberapp.scopes.WelcomeActivityScope;
 
 import javax.inject.Singleton;
 
@@ -13,7 +14,8 @@ import dagger.Provides;
 @Module
 public class MessagesModule {
 
-   @Provides @Singleton
+   @WelcomeActivityScope
+   @Provides
 public MessageGenerator provideMessageGenerator(){
 
    return new MessageGenerator();

@@ -1,11 +1,11 @@
-package com.androidtutz.anushka.memberapp.Modules;
+package com.androidtutz.anushka.memberapp.modules;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-import com.androidtutz.anushka.memberapp.Models.MemberDataManager;
-import com.androidtutz.anushka.memberapp.Models.NetworkManager;
+import com.androidtutz.anushka.memberapp.models.MemberDataManager;
+import com.androidtutz.anushka.memberapp.models.NetworkManager;
 
 import javax.inject.Named;
 import javax.inject.Singleton;

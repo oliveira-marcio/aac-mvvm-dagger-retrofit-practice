@@ -1,4 +1,4 @@
-package com.androidtutz.anushka.memberapp.Models;
+package com.androidtutz.anushka.memberapp.models;
 
 import android.content.SharedPreferences;
 
