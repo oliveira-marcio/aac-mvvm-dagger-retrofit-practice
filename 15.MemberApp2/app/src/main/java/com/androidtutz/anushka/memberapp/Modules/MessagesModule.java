@@ -14,8 +14,7 @@ import dagger.Provides;
 @Module
 public class MessagesModule {
 
-   @WelcomeActivityScope
-   @Provides
+   @Provides @WelcomeActivityScope
 public MessageGenerator provideMessageGenerator(){
 
    return new MessageGenerator();

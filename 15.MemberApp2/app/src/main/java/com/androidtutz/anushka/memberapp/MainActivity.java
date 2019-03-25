@@ -18,10 +18,12 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity {
-    @Inject @Named("local")
+    @Inject
+    @Named("local")
     MemberDataManager memberDataManager;
 
-    @Inject  @Named("dd-MMM-yyyy")
+    @Inject
+    @Named("dd-MMM-yyyy")
     String currentDate;
 
 
@@ -59,16 +61,16 @@ public class MainActivity extends AppCompatActivity {
             String result = memberDataManager.checkMemberStatus(input);
 
 
-             if(result.equals("Access Denied")) {
-                 // Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
-                 tvResult.setText(result);
+            if (result.equals("Access Denied")) {
+                // Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
+                tvResult.setText(result);
 
-             }else{
+            } else {
 
-                 Intent intent=new Intent(MainActivity.this,WelcomeActivity.class);
-                 intent.putExtra("result",result);
-                 startActivity(intent);
-             }
+                Intent intent = new Intent(MainActivity.this, WelcomeActivity.class);
+                intent.putExtra("result", result);
+                startActivity(intent);
+            }
         }
 
     }
