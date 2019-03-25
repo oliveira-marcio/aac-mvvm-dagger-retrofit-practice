@@ -7,6 +7,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.androidtutz.anushka.memberapp.models.MemberDataManager;
+
 import javax.inject.Inject;
 import javax.inject.Named;
 

@@ -2,6 +2,11 @@ package com.androidtutz.anushka.memberapp;
 
 import android.app.Application;
 
+import com.androidtutz.anushka.memberapp.components.DaggerMemberAppComponent;
+import com.androidtutz.anushka.memberapp.components.MemberAppComponent;
+import com.androidtutz.anushka.memberapp.modules.DateAndTimeModule;
+import com.androidtutz.anushka.memberapp.modules.MemberDataModule;
+
 /**
  * Created by K. A. ANUSHKA MADUSANKA on 1/25/2018.
  */

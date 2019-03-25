@@ -1,4 +1,8 @@
-package com.androidtutz.anushka.memberapp;
+package com.androidtutz.anushka.memberapp.components;
+
+import com.androidtutz.anushka.memberapp.MainActivity;
+import com.androidtutz.anushka.memberapp.modules.DateAndTimeModule;
+import com.androidtutz.anushka.memberapp.modules.MemberDataModule;
 
 import javax.inject.Singleton;
 
